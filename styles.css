@@ -343,9 +343,23 @@ body {
 }
 
 canvas {
+    /* Dile al navegador que use el motor de alta calidad para el escalado */
+    image-rendering: auto;
+    /* Específicamente para navegadores basados en Chrome/Edge */
+    text-rendering: optimizeLegibility;
+    /* Evita el suavizado excesivo que "engorda" y borra la letra pequeña */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Asegura que el canvas se ajuste al contenedor del flipbook */
+    max-width: 100%;
+    height: auto !important;
+}
+
+/*canvas {
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
-}
+}*/
 
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {
