@@ -88,7 +88,10 @@ async function startApp() {
         document.getElementById('totalPagesText').innerText = total;
 
         const dims = calculateBookDimensions();
-        const scale = Math.min(Math.max(dims.width / 552, 2.5), 4.0);
+
+        // --- CAMBIO 1: Forzamos una escala de renderizado alta (4.0) ---
+        // Esto ignora el tamaño de la pantalla y dibuja con calidad de imprenta.
+        const renderScale = 1.6;
         const fragment = document.createDocumentFragment();
 
         for (let i = 1; i <= total; i++) {
@@ -96,14 +99,26 @@ async function startApp() {
             const text = await page.getTextContent();
             pdfTextContent.push({ pageNum: i, text: text.items.map(s => s.str).join(' ') });
 
-            const viewport = page.getViewport({ scale });
+            // --- CAMBIO 2: Usamos la renderScale para el viewport ---
+            const viewport = page.getViewport({ scale: renderScale });
             const pageDiv = document.createElement('div');
             pageDiv.className = 'page';
             pageDiv.setAttribute('data-density', (i === 1 || i === total) ? 'hard' : 'soft');
 
             const canvas = document.createElement('canvas');
-            canvas.height = viewport.height; canvas.width = viewport.width;
-            await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // --- CAMBIO 3: Ajustamos el tamaño VISUAL del canvas ---
+            // Esto hace que la imagen gigante quepa en el librito sin desbordarse.
+            canvas.style.width = "100%";
+            canvas.style.height = "100%";
+
+            await page.render({
+                canvasContext: canvas.getContext('2d'),
+                viewport: viewport,
+                intent: 'print' // Ayuda a que pdf.js priorice la nitidez del texto
+            }).promise;
 
             pageDiv.appendChild(canvas);
             fragment.appendChild(pageDiv);
