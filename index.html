@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Digital Inverdron JGW</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div id="loadingOverlay">
+        <img src="LogoInverdron.png" class="logo-animado" alt="Cargando...">
+        <p class="loading-text">CARGANDO EXPERIENCIA...</p>
+    </div>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="LogoInverdron.png" alt="Inverdron Logo">
+        </div>
+        <div class="page-indicator">
+            PÁGINAS: <span class="page-box" id="currentPage">1</span> / <span id="totalPagesText">--</span>
+        </div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Cargando..." disabled>
+            <button class="tool-btn search-btn">
+                <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                    <path
+                        d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div id="searchPanel">
+        <h3 class="panel-title">Resultados</h3>
+        <div id="resultsList">Que deseas buscar...</div>
+    </div>
+
+    <div id="indexPanel">
+        <div class="index-header">
+            <h3>
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z" />
+                </svg>
+                TABLA DE CONTENIDO
+            </h3>
+            <button class="close-index" id="closeIndexBtn">✕</button>
+        </div>
+        <div id="indexContent"></div>
+    </div>
+
+    <div id="status">Iniciando motor PDF...</div>
+
+    <div id="book-wrapper">
+        <button id="prevBtn" class="nav-btn">❮</button>
+        <div id="book-container"></div>
+        <button id="nextBtn" class="nav-btn">❯</button>
+    </div>
+
+    <div class="bottom-toolbar">
+        <button id="indexBtn" class="tool-btn" title="Índice">
+            <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z" />
+            </svg>
+        </button>
+        <button id="downloadBtn" class="tool-btn" title="Descargar PDF">⬇</button>
+        <div class="zoom-group">
+            <button id="zoomBtn" class="tool-btn" title="Zoom">
+                <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                    <path
+                        d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                </svg>
+            </button>
+            <div id="zoomWrapper" class="zoom-container">
+                <input type="range" id="zoomRange" min="1" max="2" step="0.01" value="1">
+            </div>
+        </div>
+        <button id="dragBtn" class="tool-btn" title="Mover">
+            <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                <path
+                    d="M18 11c-.66 0-1.22.42-1.42 1H16v-1.5c0-.83-.67-1.5-1.5-1.5S13 9.67 13 10.5V12h-.5c-.83 0-1.5.67-1.5 1.5V14h-.5c-.83 0-1.5.67-1.5 1.5v3.5c0 2.48 2.02 4.5 4.5 4.5s4.5-2.02 4.5-4.5v-7c0-.83-.67-1.5-1.5-1.5zM12 2c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm3 2c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm-6 2c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z" />
+            </svg>
+        </button>
+    </div>
+
+    <footer class="main-footer">
+        Todos los derechos reservados a Inverdron JGW - Alex Castillo ®
+    </footer>
+
+    <audio id="flipSound" src="page-flip.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
